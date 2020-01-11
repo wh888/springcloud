@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>注册页面</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <link rel="stylesheet" href="../css/style.default.css" id="theme-stylesheet">
+  </head>
+  <body>
+    <div class="page login-page">
+      <div class="container d-flex align-items-center">
+        <div class="form-holder has-shadow">
+          <div class="row">
+            <!-- Logo & Information Panel-->
+            <div class="col-lg-6">
+              <div class="info d-flex align-items-center">
+                <div class="content">
+                  <div class="logo">
+                    <h1>欢迎注册</h1>
+                  </div>
+                  <p>旅行者旅游网注册登录界面</p>
+                </div>
+              </div>
+            </div>
+            <!-- Form Panel    -->
+
+            <div class="col-lg-6 bg-white">
+              <form id="form" class="form-horizontal">
+              <div class="form d-flex align-items-center">
+                <div class="content">
+                    <div class="form-group">
+                      <input id="register-username" class="input-material" type="text" name="userName" placeholder="请输入用户名/姓名" >
+								      <div class="invalid-feedback">
+								        	用户名必须在2~10位之间
+								      </div>
+                    </div>
+                    <div class="form-group">
+                      <input id="register-password" class="input-material" type="password" name="passWord" placeholder="请输入密码">
+                    	<div class="invalid-feedback">
+								        	密码必须在6~10位之间
+								      </div>
+                    </div>
+                    <div class="form-group">
+                      <input id="register-passwords" class="input-material" type="password" name="passWord" placeholder="确认密码">
+                    	<div class="invalid-feedback">
+								        	两次密码必须相同 且在6~10位之间
+								      </div>
+                    </div>
+                    <div class="form-group">
+                      <input id="register-usersj" class="input-material" type="text" name="usersj" placeholder="请输入手机号">
+                    	<div class="invalid-feedback">
+								        	请正确输入手机号
+								      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-5">
+                        <input type="text" class="form-control" id="CheckCode" name="yzm" placeholder="验证码">
+                          <!--<div class="invalid-feedback">
+                            输入正确验证码
+                          </div>-->
+                      </div>
+                      <div class="col-sm-4">
+                        <input type="button" class="btn btn-large btn-primary btn-block"  id="sendCode" value="获取验证码">
+                      </div>
+                    </div>
+
+
+<!--name="registerSubmit"-->
+                    <div class="form-group">
+                      <button id="regbtn" type="button"  name="registerSubmit" class="btn btn-primary">注册</button>
+                    </div>
+                  <small>已有账号?</small><a href="../wh/dl" class="signup">&nbsp;登录</a>
+                </div>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- JavaScript files-->
+
+    <script>
+    	$(function(){
+    		/*错误class  form-control is-invalid
+    		正确class  form-control is-valid*/
+    		var flagName=false;
+    		var flagPas=false;
+    		var flagPass=false;
+    		var flagsj=false;
+    		var yzm=false;
+    		/*验证用户名*/
+    		var name,passWord,passWords,flagsj,yzm;
+    		$("#register-username").change(function(){
+    			name=$("#register-username").val();
+    			if(name.length<2||name.length>10){
+    				$("#register-username").removeClass("form-control is-valid")
+    				$("#register-username").addClass("form-control is-invalid");
+    				flagName=false;
+    			}else{
+    				$("#register-username").removeClass("form-control is-invalid")
+    				$("#register-username").addClass("form-control is-valid");
+    				flagName=true;
+    			}
+    		})
+    		/*验证密码*/
+    		$("#register-password").change(function(){
+    			passWord=$("#register-password").val();
+    			if(passWord.length<6||passWord.length>18){
+    				$("#register-password").removeClass("form-control is-valid")
+    				$("#register-password").addClass("form-control is-invalid");
+    				flagPas=false;
+    			}else{
+    				$("#register-password").removeClass("form-control is-invalid")
+    				$("#register-password").addClass("form-control is-valid");
+    				flagPas=true;
+    			}
+    		})
+    		/*验证确认密码*/
+    		$("#register-passwords").change(function(){
+    			passWords=$("#register-passwords").val();
+    			if((passWord!=passWords)||(passWords.length<6||passWords.length>18)){
+    				$("#register-passwords").removeClass("form-control is-valid")
+    				$("#register-passwords").addClass("form-control is-invalid");
+    				flagPass=false;
+    			}else{
+    				$("#register-passwords").removeClass("form-control is-invalid")
+    				$("#register-passwords").addClass("form-control is-valid");
+    				flagPass=true;
+    			}
+    		})
+            /*验证手机号*/
+            $("#register-usersj").change(function(){
+              flagsj=$("#register-usersj").val();
+              if(flagsj.length==10){
+                $("#register-usersj").removeClass("form-control is-valid")
+                $("#register-usersj").addClass("form-control is-invalid");
+                flagsj=false;
+              }else{
+                $("#register-usersj").removeClass("form-control is-invalid")
+                $("#register-usersj").addClass("form-control is-valid");
+                flagsj=true;
+              }
+            })
+          /*验证验证码*/
+            $("#CheckCode").change(function(){
+              yzm=$("#CheckCode").val();
+              if(yzm.length!=null){
+                $("#CheckCode").removeClass("form-control is-valid")
+                $("#CheckCode").addClass("form-control is-invalid");
+                yzm=false;
+              }else{
+                $("#CheckCode").removeClass("form-control is-invalid")
+                $("#CheckCode").addClass("form-control is-valid");
+                yzm=true;
+              }
+            })
+
+
+          /*提交注册*/
+    		$("#regbtn").click(function(){
+
+    			if(flagName&&flagPas&&flagPass&&flagsj){
+                  $.ajax({
+                    url:"../wh/register",
+                    type:"put",
+                    data:$("#form").serialize(),
+                    dataType:"text",
+                    success:function (data){
+                      alert(data);
+                      if(data=="注册成功"){
+                        location.href="../wh/dl";
+                      }
+                      if(data="网络错误,请稍后再试"){
+                        return;
+                      }
+                   }
+                  })
+    		}else{
+    				if(!flagName){
+    					$("#register-username").addClass("form-control is-invalid");
+    				}
+    				if(!flagPas){
+    					$("#register-password").addClass("form-control is-invalid");
+    				}
+    				if(!flagPass){
+    					$("#register-passwords").addClass("form-control is-invalid");
+    				}
+                    if(!flagsj){
+                      $("#register-usersj").addClass("form-control is-invalid");
+                    }
+                    if(!yzm){
+                      $("#CheckCode").addClass("form-control is-invalid");
+                    }
+    			}
+    		})
+    	})
+        //验证码
+        $('#sendCode').on('click', function () {
+          var phone = document.getElementById('register-usersj').value;
+          if ($("#register-usersj").val()==""||$("#register-usersj").val()==null) {
+            alert('手机号不能为空');
+            return;
+          }
+          if(!(/^1[3456789]\d{9}$/.test(phone))){
+            alert("手机号码有误，请正确填写");
+            return;
+          }
+
+          var userphone=$("#register-usersj").val();
+          if(userphone!=null){
+            $.ajax({
+              url:"../wh/yanzheng",
+              data:{userphone:userphone},
+              type:"get",
+              success:function(data){
+                var aa = data.msg;
+                alert(aa);
+                if(aa == "发送成功"){
+                  timeOut('#sendCode',60);
+                }
+              }
+            })
+          }
+        })
+        //提示不能重新发
+        function timeOut(id,times){
+          var sendBtn = $(id);
+          var html = times+'秒后重新发送';
+          sendBtn.addClass('btn-dis');
+          sendBtn.val(html);
+          sendBtn.attr('disabled',true);
+          var timer = setInterval(function(){
+            times--;
+            sendBtn.val(times+'秒后重新发送');
+            if(times==0){
+              clearInterval(timer);
+              sendBtn.val('发送验证码');
+              sendBtn.removeClass('btn-dis');
+              sendBtn.attr('disabled',false);
+              return true;
+            }else{
+              return false;
+            }
+          },1000);
+        }
+
+    </script>
+  </body>
+</html>
